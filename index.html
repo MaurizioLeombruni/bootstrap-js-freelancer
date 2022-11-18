@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        <div class="bg-info p-3">
+        <div class="bg-dark p-3 text-white">
             <h3>Want an offer?</h3>
             <form class="row g-3 justify-content-start text-start" onsubmit="submitForm(event)">
                 <div class="col-sm-6">
@@ -130,14 +130,15 @@
                 <div class="col-sm-6">
                     <label for="inputWork" class="form-label">Type of Work</label>
                     <select id="inputWork" class="form-select">
-                      <option value="1">Back-end Developer</option>
-                      <option value="2">Front-end Developer</option>
-                      <option value="3">Project Analysis</option>
+                      <option value="1">Back-end Developer (€20.50/h)</option>
+                      <option value="2">Front-end Developer (€15.30/h)</option>
+                      <option value="3">Project Analysis (€33.60/h)</option>
                     </select>
                 </div>
                 <div class="col-sm-6">
                   <label for="inputDiscount" class="form-label">Discount Code</label>
                   <input type="text" class="form-control" id="inputDiscount">
+                  <div id="discountAlert" class="form-text fw-bold text-success d-none">You probably shouldn't be seeing this.</div>
                 </div>
                 <div class="col-12">
                     <label for="inputMessage" class="form-label">Message</label>
