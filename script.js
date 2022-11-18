@@ -1,8 +1,12 @@
+//Dichiariamo le variabili di base.
+
 let price = 0;
 let discount = 1;
 let allowedCodes = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
 
 let priceAlert = document.getElementById('outputPrice');
+
+//Dichiariamo gli oggetti necessari a compilare la pagina.
 
 let portfolioPages = [
 
@@ -38,9 +42,13 @@ let portfolioPages = [
 
 ]
 
+//La funzione compileSiteCards() stila dinamicamente la parte del portfolio.
+
 function compileSiteCards(){
 
     for(i=0; i<portfolioPages.length; i++){
+
+        //Creiamo tutti gli elementi HTML necessari.
 
         let divColumn = document.createElement('div');
         let divCard = document.createElement('div');
@@ -54,6 +62,8 @@ function compileSiteCards(){
         let cardButtonVisit = document.createElement('button');
         let previewText = document.createTextNode("Preview");
         let visitText = document.createTextNode("Visit Site");
+
+        //Aggiungiamo le classi per un layout più carino e responsivo.
     
         divColumn.classList.add("col-sm-6", "col-lg-4", "mb-5");
         divCard.classList.add("card", "border", "shadow");
@@ -63,16 +73,25 @@ function compileSiteCards(){
         cardButtonPreview.classList.add("btn", "btn-info", "text-nowrap");
         cardButtonVisit.classList.add("btn", "btn-outline-info", "me-md-2", "text-nowrap");
     
+        //Assegnamo ai bottoni il tipo e il testo; sono uguali per tutti gli elementi.
+
         cardButtonPreview.type = "button";
         cardButtonVisit.type = "button";
         cardButtonPreview.appendChild(previewText);
         cardButtonVisit.appendChild(visitText);
 
+        //L'immagine viene assegnata dinamicamente in base alla proprietà dell'oggetto. L'alt, per chiarezza, viene assegnato
+        //con il nome del sito.
+
         cardImage.src = "./assets/img/portfolio/" + portfolioPages[i].siteImage;
         cardImage.alt = portfolioPages[i].siteName;
 
+        //Il titolo viene preso dalle proprietà dell'oggetto e assegnato al suo elemento HTML.
+
         cardTitleText = document.createTextNode(portfolioPages[i].siteName);
         cardTitle.appendChild(cardTitleText);
+
+        //Si esegue l'assegnazione di tutti gli elementi al rispettivo padre nel codice HTML.
 
         document.getElementById('portfolioContainer').appendChild(divColumn);
 
@@ -85,17 +104,23 @@ function compileSiteCards(){
 
     }
 
-
 }
+
+    //La funzione checkDiscount() controlla il codice inserito nell'apposito form e stabilisce se c'è uno sconto o meno da applicare.
 
 function checkDiscount(){
 
     let codeToCheck = document.getElementById('inputDiscount').value;
     let discountMessage = document.getElementById('discountAlert');
 
+    //Scorre l'array dei codici per cercare se il codice immesso è effettivamente valido.
+
     for(i=0; i<allowedCodes.length; i++){
 
         if (codeToCheck == allowedCodes[i]){
+
+            //Se il codice è valido, diamo un messaggio di conferma, settiamo il moltiplicatore del 25% dello sconto, e togliamo il codice
+            //dall'array.
 
             document.getElementById('inputDiscount').classList.add("text-success", "fw-bold");
             discountMessage.innerHTML = "Valid Code: 25% discount applied";
@@ -108,6 +133,8 @@ function checkDiscount(){
         }
     }
 
+    //Altrimenti, finiamo con un messaggio di errore.
+
     document.getElementById('inputDiscount').classList.add("text-danger", "fw-bold");
     discountMessage.innerHTML = "Input code missing or invalid";
     discountMessage.classList.remove("text-success", "d-none");
@@ -116,19 +143,30 @@ function checkDiscount(){
     return false;
 }
 
+//La funzione calculatePrice() calcola il prezzo se tutti gli elementi del form sono validi.
+
 function calculatePrice(){
     let numHours = document.getElementById('inputHours').value;
     let workType = document.getElementById('inputWork').value;
 
+    //Ci assicuriamo che i valori numerici siano effettivamente dei numeri.
+
     numHours = parseInt(numHours);
     workType = parseInt(workType);
+
+    //Se le ore immesse non sono un valore valido, termina la funzione.
 
     if(isNaN(numHours)){
         outputPrice.innerHTML = "Missing or invalid entries";
         return false;
     }
 
+    //Controlliamo lo sconto.
+
     checkDiscount();
+
+    //Infine, stabiliamo il prezzo in base alla scelta del tipo di lavoro da parte dell'utente.
+    //Il prezzo viene calcolato in base alle ore specificate, il prezzo base di ogni lavoro, e il possibile sconto.
 
     switch(workType){
 
@@ -153,10 +191,19 @@ function calculatePrice(){
     }
 }
 
+//Le funzioni checkName(), checkSurname() e checkEmail() verificano se i loro rispettivi input sono validi, ritornando vero o falso
+//e notificando l'utente in caso di errore.
+
 function checkName(string){
+
+    //Ci assicuriamo che l'input sia effettivamente una stringa, poi togliamo i numeri.
+    //Nessuno ha numeri nel proprio nome o cognome, vero?
 
     string = string.toString();
     let noNumbers = string.replace(/[0-9]/g, '');
+
+    //Un input invalido è una stringa vuota o una stringa di soli numeri. Notifichiamo l'utente in caso di errore, e togliamo la
+    //notifica quando un input corretto viene eseguito.
 
     if(noNumbers.trim() === ''){
         document.getElementById('nameMessage').classList.remove("d-none");
@@ -193,6 +240,8 @@ function checkSurname(string){
 function checkEmail(string){
 
     string = string.toString();
+
+    //Per le email controlliamo se la stringa include una chiocciola.
     if(string.trim() === "" || !string.includes("@")){
 
         document.getElementById('emailMessage').classList.remove("d-none");
@@ -205,6 +254,9 @@ function checkEmail(string){
     }
 
 }
+
+//La funzione submitForm() verifica la validità degli input. Se anche solo un input è invalido, termina la funzione, altrimenti calcola il prezzo
+//e informa l'utente.
 
 function submitForm(event){
 
@@ -220,12 +272,14 @@ function submitForm(event){
 
     if(!isNameValid || !isSurnameValid || !isEmailValid){
 
-        console.log("Something's missing or incorrect in the form.")
+        outputPrice.innerHTML = "Please check if your information is correct.";
         return false;
     }
 
     calculatePrice();
 
 }
+
+//Compiliamo il portfolio all'avvio della pagina.
 
 compileSiteCards();
