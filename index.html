@@ -110,7 +110,7 @@
 
         <div class="bg-info p-3">
             <h3>Want an offer?</h3>
-            <form class="row g-3 justify-content-start text-start">
+            <form class="row g-3 justify-content-start text-start" onsubmit="submitForm(event)">
                 <div class="col-sm-6">
                   <label for="inputName" class="form-label">First Name</label>
                   <input type="text" class="form-control" id="inputName">
@@ -128,11 +128,11 @@
                   <input type="text" class="form-control" id="inputHours" placeholder="1 Hour">
                 </div>
                 <div class="col-sm-6">
-                    <label for="inputState" class="form-label">Type of Work</label>
-                    <select id="inputState" class="form-select">
-                      <option selected>Back-end Developer</option>
-                      <option>Front-end Developer</option>
-                      <option>Project Analysis</option>
+                    <label for="inputWork" class="form-label">Type of Work</label>
+                    <select id="inputWork" class="form-select">
+                      <option value="1">Back-end Developer</option>
+                      <option value="2">Front-end Developer</option>
+                      <option value="3">Project Analysis</option>
                     </select>
                 </div>
                 <div class="col-sm-6">
@@ -147,8 +147,8 @@
                   <button type="submit" class="btn btn-warning"><strong>Send</strong></button>
                 </div>
             </form>
-            <h4 class="text-start mb-4">
-                Il prezzo finale è di: 200.75€.
+            <h4 class="text-start mb-4" id="outputPrice">
+                
             </h4>
         </div>
 
