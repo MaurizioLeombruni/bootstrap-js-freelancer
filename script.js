@@ -4,6 +4,90 @@ let allowedCodes = ["YHDNU32", "JANJC63", "PWKCN25", "SJDPO96", "POCIE24"];
 
 let priceAlert = document.getElementById('outputPrice');
 
+let portfolioPages = [
+
+    {
+        siteName: "Cabin Website",
+        siteImage: "cabin.png"
+    },
+
+    {
+        siteName: "Cake Website",
+        siteImage: "cake.png"
+    },
+
+    {
+        siteName: "Circus Website",
+        siteImage: "circus.png"
+    },
+
+    {
+        siteName: "Not Twitch TV",
+        siteImage: "game.png"
+    },
+
+    {
+        siteName: "Safe Website",
+        siteImage: "safe.png"
+    },
+
+    {
+        siteName: "Ocean Website",
+        siteImage: "submarine.png"
+    }
+
+]
+
+function compileSiteCards(){
+
+    for(i=0; i<portfolioPages.length; i++){
+
+        let divColumn = document.createElement('div');
+        let divCard = document.createElement('div');
+        let divButtons = document.createElement('div');
+    
+        let cardImage = document.createElement('img');
+        let cardTitle = document.createElement('h5');
+        let cardTitleText;
+    
+        let cardButtonPreview = document.createElement('button');
+        let cardButtonVisit = document.createElement('button');
+        let previewText = document.createTextNode("Preview");
+        let visitText = document.createTextNode("Visit Site");
+    
+        divColumn.classList.add("col-sm-6", "col-lg-4", "mb-5");
+        divCard.classList.add("card", "border", "shadow");
+        divButtons.classList.add("d-grid", "gap-2", "d-md-block", "mb-3");
+        cardImage.classList.add("card-img-top");
+        cardTitle.classList.add("card-title", "fw-bold", "mt-2");
+        cardButtonPreview.classList.add("btn", "btn-info", "text-nowrap");
+        cardButtonVisit.classList.add("btn", "btn-outline-info", "me-md-2", "text-nowrap");
+    
+        cardButtonPreview.type = "button";
+        cardButtonVisit.type = "button";
+        cardButtonPreview.appendChild(previewText);
+        cardButtonVisit.appendChild(visitText);
+
+        cardImage.src = "./assets/img/portfolio/" + portfolioPages[i].siteImage;
+        cardImage.alt = portfolioPages[i].siteName;
+
+        cardTitleText = document.createTextNode(portfolioPages[i].siteName);
+        cardTitle.appendChild(cardTitleText);
+
+        document.getElementById('portfolioContainer').appendChild(divColumn);
+
+        divColumn.appendChild(divCard);
+        divCard.appendChild(cardImage);
+        divCard.appendChild(cardTitle);
+        divCard.appendChild(divButtons);
+        divButtons.appendChild(cardButtonPreview);
+        divButtons.appendChild(cardButtonVisit);
+
+    }
+
+
+}
+
 function checkDiscount(){
 
     let codeToCheck = document.getElementById('inputDiscount').value;
@@ -40,7 +124,7 @@ function calculatePrice(){
     workType = parseInt(workType);
 
     if(isNaN(numHours)){
-        console.log("Well, something went wrong.");
+        outputPrice.innerHTML = "Missing or invalid entries";
         return false;
     }
 
@@ -76,3 +160,5 @@ function submitForm(event){
     event.preventDefault();
 
 }
+
+compileSiteCards();
