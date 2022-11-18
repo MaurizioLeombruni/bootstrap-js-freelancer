@@ -153,11 +153,78 @@ function calculatePrice(){
     }
 }
 
+function checkName(string){
+
+    string = string.toString();
+    let noNumbers = string.replace(/[0-9]/g, '');
+
+    if(noNumbers.trim() === ''){
+        document.getElementById('nameMessage').classList.remove("d-none");
+        return false;
+
+    } else {
+
+        document.getElementById('nameMessage').classList.add("d-none");
+        return true;
+
+    }
+
+}
+
+function checkSurname(string){
+
+    string = string.toString();
+    let noNumbers = string.replace(/[0-9]/g, '');
+
+    if(noNumbers.trim() === ''){
+
+        document.getElementById('surnameMessage').classList.remove("d-none");
+        return false;
+
+    } else {
+
+        document.getElementById('surnameMessage').classList.add("d-none");
+        return true;
+
+    }
+
+}
+
+function checkEmail(string){
+
+    string = string.toString();
+    if(string.trim() === "" || !string.includes("@")){
+
+        document.getElementById('emailMessage').classList.remove("d-none");
+        return false;
+
+    } else {
+        document.getElementById('emailMessage').classList.add("d-none");
+        return true;
+
+    }
+
+}
+
 function submitForm(event){
 
-    calculatePrice();
-
     event.preventDefault();
+
+    let userName = document.getElementById('inputName').value;
+    let userSurname = document.getElementById('inputSurname').value;
+    let userEmail = document.getElementById('inputEmail').value;
+
+    let isNameValid = checkName(userName);
+    let isSurnameValid = checkSurname(userSurname);
+    let isEmailValid = checkEmail(userEmail);
+
+    if(!isNameValid || !isSurnameValid || !isEmailValid){
+
+        console.log("Something's missing or incorrect in the form.")
+        return false;
+    }
+
+    calculatePrice();
 
 }
 
